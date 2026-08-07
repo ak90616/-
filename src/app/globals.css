@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Default (admin) theme — light platinum */
 :root {
   --bg: #faf8f4;
   --surface: #ffffff;
@@ -131,4 +132,146 @@ body {
 ::selection {
   background: var(--gold-light);
   color: var(--ink);
+}
+
+/* ══════════════════════════════════════════════
+   AURUM — dark luxury storefront theme
+   Scoped to .theme-aurum so /admin keeps the
+   light platinum theme above untouched.
+   ══════════════════════════════════════════════ */
+.theme-aurum {
+  --bg: #060504;
+  --bg2: #0b0908;
+  --bg3: #110e0c;
+  --surface: #0d0b09;
+  --ink: #e4d9bf;
+  --ink-soft: #a89572;
+  --ink-faint: #6e6150;
+  --line: rgba(201, 168, 76, 0.14);
+  --gold: #c9a84c;
+  --gold-deep: #e8c97a;
+  --gold-light: #e8c97a;
+  --red: #c0392b;
+  --gold-gradient: linear-gradient(135deg, #f2e2b8 0%, #c9a84c 45%, #8c6a33 100%);
+  --gold-gradient-soft: linear-gradient(135deg, rgba(201, 168, 76, 0.16), rgba(201, 168, 76, 0.04));
+
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100%;
+  font-family: var(--font-montserrat), var(--font-noto-serif-tc), system-ui, sans-serif;
+}
+
+.theme-aurum ::selection {
+  background: var(--gold);
+  color: #060504;
+}
+
+.theme-aurum .font-display {
+  font-family: var(--font-cormorant), var(--font-noto-serif-tc), serif;
+}
+
+.theme-aurum .font-body {
+  font-family: var(--font-montserrat), var(--font-noto-serif-tc), sans-serif;
+}
+
+/* Custom cursor — only enabled once JS confirms a fine pointer */
+.theme-aurum.has-cursor,
+.theme-aurum.has-cursor * {
+  cursor: none;
+}
+
+#aurum-cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+#aurum-cursor-ring {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s,
+    height 0.3s,
+    border-color 0.3s;
+}
+
+.aurum-hover #aurum-cursor-dot {
+  transform: translate(-50%, -50%) scale(3);
+  opacity: 0.35;
+}
+
+.aurum-hover #aurum-cursor-ring {
+  width: 50px;
+  height: 50px;
+  border-color: rgba(201, 168, 76, 0.85);
+}
+
+/* Scroll progress bar */
+#aurum-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--gold-gradient);
+  z-index: 10001;
+  width: 0;
+  transition: width 0.08s;
+}
+
+/* Marquee ticker */
+.aurum-marquee-track {
+  display: flex;
+  gap: 3.25rem;
+  padding: 18px 0;
+  white-space: nowrap;
+  animation: aurum-marquee 26s linear infinite;
+  width: max-content;
+}
+
+@keyframes aurum-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Scroll-reveal */
+.aurum-rv {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aurum-rv.aurum-in {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes aurum-arrow-bounce {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(6px);
+  }
+}
+
+.animate-arrow-bounce {
+  animation: aurum-arrow-bounce 2.5s ease-in-out infinite;
 }

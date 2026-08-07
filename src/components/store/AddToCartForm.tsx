@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
 import { useToast } from "@/components/ui/ToastProvider";
 import { QuantityStepper } from "@/components/ui/QuantityStepper";
@@ -18,9 +17,8 @@ export function AddToCartForm({
     stock: number;
   };
 }) {
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
   const { showToast } = useToast();
-  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
 
   const outOfStock = product.stock === 0;
@@ -42,12 +40,12 @@ export function AddToCartForm({
 
   function handleBuyNow() {
     handleAdd();
-    router.push("/cart");
+    openCart();
   }
 
   if (outOfStock) {
     return (
-      <p className="inline-flex items-center gap-2 rounded-full bg-[var(--ink)]/5 px-4 py-2 text-sm text-[var(--ink-soft)]">
+      <p className="inline-flex items-center gap-2 border border-[var(--line)] px-4 py-2 text-sm text-[var(--ink-soft)]">
         目前缺貨中,敬請期待補貨
       </p>
     );
@@ -62,13 +60,13 @@ export function AddToCartForm({
       <div className="flex flex-wrap gap-3">
         <button
           onClick={handleAdd}
-          className="rounded-full border border-[var(--ink)] px-6 py-3 text-sm text-[var(--ink)] transition-colors hover:bg-[var(--ink)] hover:text-white"
+          className="border border-[var(--gold)]/40 px-6 py-3 text-[0.58rem] tracking-[0.25em] text-[var(--gold)] uppercase transition-colors hover:bg-[var(--gold)]/10"
         >
           加入購物車
         </button>
         <button
           onClick={handleBuyNow}
-          className="rounded-full bg-gold-gradient px-6 py-3 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
+          className="bg-gold-gradient px-6 py-3 text-[0.58rem] tracking-[0.25em] text-black uppercase shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
         >
           立即購買
         </button>

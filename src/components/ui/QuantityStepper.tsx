@@ -12,12 +12,12 @@ export function QuantityStepper({
   onChange: (next: number) => void;
 }) {
   return (
-    <div className="inline-flex items-center rounded-full border border-[var(--line)] bg-[var(--surface)]">
+    <div className="inline-flex items-center border border-[var(--line)]">
       <button
         type="button"
         onClick={() => onChange(Math.max(min, value - 1))}
         disabled={value <= min}
-        className="flex h-9 w-9 items-center justify-center rounded-full text-lg text-[var(--ink-soft)] transition-colors hover:text-[var(--gold-deep)] disabled:opacity-30"
+        className="flex h-8 w-8 items-center justify-center text-lg text-[var(--gold)] transition-colors hover:bg-[var(--gold)]/10 disabled:opacity-30"
         aria-label="減少數量"
       >
         −
@@ -27,7 +27,7 @@ export function QuantityStepper({
         type="button"
         onClick={() => onChange(Math.min(max, value + 1))}
         disabled={value >= max}
-        className="flex h-9 w-9 items-center justify-center rounded-full text-lg text-[var(--ink-soft)] transition-colors hover:text-[var(--gold-deep)] disabled:opacity-30"
+        className="flex h-8 w-8 items-center justify-center text-lg text-[var(--gold)] transition-colors hover:bg-[var(--gold)]/10 disabled:opacity-30"
         aria-label="增加數量"
       >
         +

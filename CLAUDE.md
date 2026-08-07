@@ -28,7 +28,10 @@ Next.js 16 App Router project. Two route groups under `src/app` share the root l
 in chrome and auth:
 
 - `src/app/(store)/` — public storefront (`/`, `/products/[slug]`, `/cart`, `/checkout`,
-  `/order/[id]`). Its `layout.tsx` adds `StoreHeader`. The route group segment is invisible in URLs.
+  `/order/[id]`). Its `layout.tsx` wraps everything in a `.theme-aurum` div and mounts
+  `CartProvider`, `ToastProvider`, `QuickViewProvider`, `CustomCursor`, `ScrollProgress`,
+  `ScrollReveal`, `StoreHeader`, `CartSidebar`, and `QuickViewModal` — all storefront-only. The
+  route group segment is invisible in URLs.
 - `src/app/admin/` — `/admin/login` is unprotected; everything else lives under
   `src/app/admin/(protected)/` whose `layout.tsx` renders the sidebar and reads the session
   server-side via `next/headers` `cookies()` just to display the admin's email.
@@ -68,22 +71,43 @@ small client components that `fetch()` the matching `/api/admin/...` route and c
 `router.refresh()` on success. Follow this split rather than introducing a client-side data-fetching
 library.
 
-**Design system**: the brand ("鉑金香氛 / Platinum Parfum", a perfume storefront) is a platinum/
-champagne-gold palette defined as CSS custom properties in `src/app/globals.css` (`--gold`,
-`--ink`, `--bg`, `--gold-gradient`, etc.) plus utility classes (`text-gold-gradient`,
-`bg-gold-gradient`, `.shimmer`, `.animate-fade-up`, `.animate-pop`, `.animate-toast`). Reuse these
-tokens/utilities for new UI instead of introducing new colors or one-off keyframes. Headings use
-`font-display` (Playfair Display + Noto Serif TC, loaded via `next/font/google` in
-`src/app/layout.tsx`); body text falls back to the CJK serif. Toast feedback (e.g. after add-to-cart)
-goes through `useToast()` from `src/components/ui/ToastProvider.tsx`, not ad-hoc inline state.
+**Design system — two themes, one token set**: `src/app/globals.css` defines CSS custom properties
+(`--gold`, `--ink`, `--bg`, `--surface`, `--line`, `--gold-gradient`, etc.) twice: once on `:root`
+(light platinum — used by `/admin`, untouched) and again inside a `.theme-aurum` class (dark
+champagne-gold — applied only by `(store)/layout.tsx`'s wrapper div). Components never hardcode
+which theme they're in; they just use `var(--ink)` / `bg-[var(--surface)]` / utility classes
+(`text-gold-gradient`, `bg-gold-gradient`, `.shimmer`, `.animate-fade-up`, `.animate-pop`,
+`.animate-toast`, `.aurum-rv`/`.aurum-in` for scroll-reveal) and automatically render correctly
+in whichever subtree they're mounted in. When adding storefront UI, reuse these tokens rather than
+introducing new colors — and don't reuse admin's rounded-corner/light styling conventions in the
+storefront, which is deliberately sharp-edged (no `rounded-*`) and dark.
+
+Fonts: storefront headings use `font-display` → Cormorant Garamond (+ Noto Serif TC for CJK
+fallback); storefront body text uses `font-body` → Montserrat. Admin's `font-display` resolves to
+Playfair Display instead (still Noto Serif TC fallback) since `.font-display` is overridden inside
+`.theme-aurum`. All four families load once via `next/font/google` in `src/app/layout.tsx`.
+
+Storefront-only interactive chrome lives in `src/components/store/`: `CustomCursor` (only enabled
+when `matchMedia('(pointer: fine)')` matches, to avoid breaking touch devices), `ScrollProgress`,
+`ScrollReveal` (IntersectionObserver adding `.aurum-in` to `.aurum-rv` elements — new sections must
+be given both classes and, if anchor-linked from the nav, `scroll-mt-20` so the fixed header doesn't
+overlap them on jump), `HeroCanvas` (particle/light-ray animation drawn over
+`public/images/img_sand.jpg`), `CartSidebar` (driven by `CartProvider`'s `isOpen`/`openCart`/
+`closeCart`/`toggleCart`, not a route), and `QuickViewModal` (driven by `QuickViewProvider`, opened
+with a full product object via `openQuickView()` — not just an id, since there's no global product
+lookup). Toast feedback goes through `useToast()` from `src/components/ui/ToastProvider.tsx`.
+
+**Product imagery**: products render as a single large emoji (`imageEmoji` field), not photos —
+intentional, see the "商品圖片" section of `README.md` for why (some images in the AURUM interface
+reference this project was ported from turned out to be real Tom Ford / Hermès product photography
+and were deliberately excluded). `public/images/img_sand.jpg` (a generic sand-dune texture) is the
+only bundled photo and is only used as the hero canvas background.
 
 ## Conventions
 
 - User-facing copy is Traditional Chinese (zh-Hant); keep new UI text consistent with that.
-- Product images are a single emoji (`imageEmoji` field) rather than uploaded files — there is no
-  image upload/storage pipeline in this project. `prisma/seed.ts` categorizes perfumes by scent
-  family (花香調/木質調/柑橘調/東方琥珀調/海洋清新調) — follow that pattern for new products rather
-  than inventing unrelated categories.
+- `prisma/seed.ts` categorizes perfumes by scent family (花香調/木質調/柑橘調/東方琥珀調/海洋清新調)
+  — follow that pattern for new products rather than inventing unrelated categories.
 - `prisma/seed.ts` is idempotent (`upsert` on unique fields) — safe to re-run against an existing
   database.
 

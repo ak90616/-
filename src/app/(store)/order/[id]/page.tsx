@@ -17,9 +17,9 @@ export default async function OrderConfirmationPage({
   if (!order) notFound();
 
   return (
-    <div className="animate-fade-up mx-auto max-w-xl">
+    <div className="animate-fade-up mx-auto max-w-xl px-5 pt-32 pb-24 sm:px-10">
       <div className="mb-8 text-center">
-        <div className="animate-pop mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gold-gradient text-2xl text-white shadow-lg shadow-[#c9a35a]/30">
+        <div className="animate-pop mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gold-gradient text-2xl text-black shadow-lg shadow-[#c9a35a]/30">
           ✓
         </div>
         <h1 className="font-display mt-5 text-3xl text-[var(--ink)]">訂單已送出</h1>
@@ -28,7 +28,7 @@ export default async function OrderConfirmationPage({
         </p>
       </div>
 
-      <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-sm">
+      <div className="border border-[var(--line)] bg-[var(--surface)] p-6">
         <p className="mb-4 font-mono text-xs text-[var(--ink-faint)]">訂單編號:{order.id}</p>
         <div className="space-y-3 text-sm">
           {order.items.map((item) => (
@@ -51,7 +51,7 @@ export default async function OrderConfirmationPage({
       <div className="mt-8 text-center">
         <Link
           href="/"
-          className="inline-block rounded-full bg-gold-gradient px-8 py-3.5 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
+          className="inline-block bg-gold-gradient px-8 py-3.5 text-[0.58rem] tracking-[0.3em] text-black uppercase shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
         >
           繼續選購
         </Link>

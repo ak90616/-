@@ -7,7 +7,7 @@ import { useCart } from "@/components/cart/CartProvider";
 import { formatCents } from "@/lib/money";
 
 const inputClass =
-  "w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm text-[var(--ink)] outline-none transition-shadow focus:border-[var(--gold)] focus:ring-2 focus:ring-[var(--gold-light)]";
+  "w-full border-0 border-b border-[var(--line)] bg-transparent py-2.5 text-sm text-[var(--ink)] outline-none transition-colors focus:border-[var(--gold)]";
 
 export default function CheckoutPage() {
   const { items, totalCents, clear } = useCart();
@@ -53,11 +53,11 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="animate-fade-up py-20 text-center">
+      <div className="animate-fade-up px-5 py-40 text-center sm:px-10">
         <p className="text-[var(--ink-soft)]">購物車是空的,無法結帳</p>
         <Link
           href="/"
-          className="mt-6 inline-block rounded-full bg-gold-gradient px-7 py-3 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
+          className="mt-6 inline-block bg-gold-gradient px-7 py-3 text-[0.58rem] tracking-[0.3em] text-black uppercase shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
         >
           繼續選購
         </Link>
@@ -66,12 +66,14 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="animate-fade-up grid gap-10 md:grid-cols-3">
-      <form onSubmit={handleSubmit} className="space-y-5 md:col-span-2">
+    <div className="animate-fade-up mx-auto grid max-w-4xl gap-12 px-5 pt-32 pb-24 sm:px-10 md:grid-cols-3">
+      <form onSubmit={handleSubmit} className="space-y-6 md:col-span-2">
         <h1 className="font-display text-3xl text-[var(--ink)]">結帳</h1>
 
         <div>
-          <label className="mb-1.5 block text-sm text-[var(--ink-soft)]">收件人姓名</label>
+          <label className="mb-1.5 block text-[0.55rem] tracking-[0.25em] text-[var(--gold)]/60 uppercase">
+            收件人姓名
+          </label>
           <input
             value={form.customerName}
             onChange={(e) => update("customerName", e.target.value)}
@@ -80,7 +82,9 @@ export default function CheckoutPage() {
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm text-[var(--ink-soft)]">Email</label>
+          <label className="mb-1.5 block text-[0.55rem] tracking-[0.25em] text-[var(--gold)]/60 uppercase">
+            Email
+          </label>
           <input
             type="email"
             value={form.customerEmail}
@@ -90,7 +94,9 @@ export default function CheckoutPage() {
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm text-[var(--ink-soft)]">電話</label>
+          <label className="mb-1.5 block text-[0.55rem] tracking-[0.25em] text-[var(--gold)]/60 uppercase">
+            電話
+          </label>
           <input
             value={form.customerPhone}
             onChange={(e) => update("customerPhone", e.target.value)}
@@ -99,13 +105,15 @@ export default function CheckoutPage() {
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-sm text-[var(--ink-soft)]">收件地址</label>
+          <label className="mb-1.5 block text-[0.55rem] tracking-[0.25em] text-[var(--gold)]/60 uppercase">
+            收件地址
+          </label>
           <textarea
             value={form.address}
             onChange={(e) => update("address", e.target.value)}
             required
             rows={2}
-            className={inputClass}
+            className={`${inputClass} resize-none`}
           />
         </div>
 
@@ -114,7 +122,7 @@ export default function CheckoutPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-full bg-gold-gradient px-6 py-3.5 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
+          className="w-full bg-gold-gradient px-6 py-3.5 text-[0.6rem] tracking-[0.3em] text-black uppercase shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-[1.01] disabled:opacity-50 disabled:hover:scale-100"
         >
           {loading ? "處理中…" : `送出訂單・${formatCents(totalCents)}`}
         </button>
@@ -123,7 +131,7 @@ export default function CheckoutPage() {
         </p>
       </form>
 
-      <div className="h-fit rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-sm">
+      <div className="h-fit border border-[var(--line)] bg-[var(--surface)] p-6">
         <h2 className="font-display mb-4 text-lg text-[var(--ink)]">訂單摘要</h2>
         <div className="space-y-3 text-sm">
           {items.map((item) => (

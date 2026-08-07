@@ -27,6 +27,10 @@ type CartContextValue = {
   clear: () => void;
   totalCents: number;
   totalQuantity: number;
+  isOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -35,6 +39,7 @@ const STORAGE_KEY = "shop_cart_v1";
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     // One-time read after mount, intentionally: server-rendered markup must
@@ -85,6 +90,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clear = useCallback(() => setItems([]), []);
 
+  const openCart = useCallback(() => setIsOpen(true), []);
+  const closeCart = useCallback(() => setIsOpen(false), []);
+  const toggleCart = useCallback(() => setIsOpen((v) => !v), []);
+
   const totalCents = useMemo(
     () => items.reduce((sum, i) => sum + i.priceCents * i.quantity, 0),
     [items],
@@ -95,8 +104,32 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ items, addItem, removeItem, updateQuantity, clear, totalCents, totalQuantity }),
-    [items, addItem, removeItem, updateQuantity, clear, totalCents, totalQuantity],
+    () => ({
+      items,
+      addItem,
+      removeItem,
+      updateQuantity,
+      clear,
+      totalCents,
+      totalQuantity,
+      isOpen,
+      openCart,
+      closeCart,
+      toggleCart,
+    }),
+    [
+      items,
+      addItem,
+      removeItem,
+      updateQuantity,
+      clear,
+      totalCents,
+      totalQuantity,
+      isOpen,
+      openCart,
+      closeCart,
+      toggleCart,
+    ],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

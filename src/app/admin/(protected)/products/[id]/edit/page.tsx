@@ -26,7 +26,13 @@ export default async function EditProductPage({
           slug: product.slug,
           description: product.description,
           price: (product.priceCents / 100).toString(),
+          compareAtPrice: product.compareAtPriceCents
+            ? (product.compareAtPriceCents / 100).toString()
+            : "",
           imageEmoji: product.imageEmoji,
+          badge: product.badge ?? "",
+          rating: product.rating.toString(),
+          reviewCount: product.reviewCount.toString(),
           stock: product.stock.toString(),
           categoryId: product.categoryId,
         }}

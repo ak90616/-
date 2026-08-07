@@ -1,20 +1,31 @@
+import { CartProvider } from "@/components/cart/CartProvider";
+import { ToastProvider } from "@/components/ui/ToastProvider";
+import { QuickViewProvider } from "@/components/store/QuickViewProvider";
+import { CustomCursor } from "@/components/store/CustomCursor";
+import { ScrollProgress } from "@/components/store/ScrollProgress";
+import { ScrollReveal } from "@/components/store/ScrollReveal";
 import { StoreHeader } from "@/components/store/StoreHeader";
+import { CartSidebar } from "@/components/store/CartSidebar";
+import { QuickViewModal } from "@/components/store/QuickViewModal";
+import { Footer } from "@/components/store/Footer";
 
 export default function StoreLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <StoreHeader />
-      <main className="flex-1">
-        <div className="mx-auto w-full max-w-6xl px-4 py-10">{children}</div>
-      </main>
-      <footer className="border-t border-[var(--line)] bg-[var(--surface)]">
-        <div className="mx-auto max-w-6xl px-4 py-10 text-center">
-          <p className="font-display text-lg tracking-wide text-[var(--ink)]">鉑金香氛</p>
-          <p className="mt-2 text-xs tracking-widest text-[var(--ink-faint)]">
-            PLATINUM PARFUM · 馥郁尊寵,鉑金之選
-          </p>
-        </div>
-      </footer>
-    </>
+    <div className="theme-aurum flex min-h-screen flex-col">
+      <ToastProvider>
+        <CartProvider>
+          <QuickViewProvider>
+            <CustomCursor />
+            <ScrollProgress />
+            <ScrollReveal />
+            <StoreHeader />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <CartSidebar />
+            <QuickViewModal />
+          </QuickViewProvider>
+        </CartProvider>
+      </ToastProvider>
+    </div>
   );
 }

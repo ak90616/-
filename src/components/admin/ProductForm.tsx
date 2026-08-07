@@ -13,10 +13,16 @@ type ProductFormValues = {
   slug: string;
   description: string;
   price: string;
+  compareAtPrice: string;
   imageEmoji: string;
+  badge: string;
+  rating: string;
+  reviewCount: string;
   stock: string;
   categoryId: string;
 };
+
+const BADGE_OPTIONS = ["", "新品", "限量", "暢銷", "頂奢"];
 
 export function ProductForm({
   categories,
@@ -35,7 +41,11 @@ export function ProductForm({
       slug: "",
       description: "",
       price: "",
+      compareAtPrice: "",
       imageEmoji: "📦",
+      badge: "",
+      rating: "4.8",
+      reviewCount: "0",
       stock: "0",
       categoryId: categories[0]?.id ?? "",
     },
@@ -52,7 +62,12 @@ export function ProductForm({
     setError(null);
 
     const priceCents = Math.round(Number(values.price) * 100);
+    const compareAtPriceCents = values.compareAtPrice.trim()
+      ? Math.round(Number(values.compareAtPrice) * 100)
+      : null;
     const stock = Number(values.stock);
+    const rating = Number(values.rating);
+    const reviewCount = Number(values.reviewCount);
 
     if (!values.name.trim() || !values.slug.trim()) {
       setError("請輸入商品名稱與網址代稱");
@@ -60,6 +75,10 @@ export function ProductForm({
     }
     if (!Number.isFinite(priceCents) || priceCents <= 0) {
       setError("請輸入有效的價格");
+      return;
+    }
+    if (values.compareAtPrice.trim() && (!Number.isFinite(compareAtPriceCents) || (compareAtPriceCents ?? 0) <= 0)) {
+      setError("請輸入有效的原價");
       return;
     }
     if (!Number.isFinite(stock) || stock < 0) {
@@ -83,7 +102,11 @@ export function ProductForm({
           slug: values.slug,
           description: values.description,
           priceCents,
+          compareAtPriceCents,
           imageEmoji: values.imageEmoji || "📦",
+          badge: values.badge || null,
+          rating,
+          reviewCount,
           stock,
           categoryId: values.categoryId,
         }),
@@ -147,6 +170,22 @@ export function ProductForm({
           />
         </div>
         <div>
+          <label className="block text-sm font-medium mb-1 text-[var(--ink)]">
+            原價(選填,顯示折扣線)
+          </label>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            value={values.compareAtPrice}
+            onChange={(e) => update("compareAtPrice", e.target.value)}
+            className={inputClass}
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
           <label className="block text-sm font-medium mb-1 text-[var(--ink)]">庫存數量</label>
           <input
             type="number"
@@ -158,9 +197,6 @@ export function ProductForm({
             required
           />
         </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium mb-1 text-[var(--ink)]">分類</label>
           <select
@@ -175,11 +211,54 @@ export function ProductForm({
             ))}
           </select>
         </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
         <div>
           <label className="block text-sm font-medium mb-1 text-[var(--ink)]">圖示 (emoji)</label>
           <input
             value={values.imageEmoji}
             onChange={(e) => update("imageEmoji", e.target.value)}
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1 text-[var(--ink)]">標籤</label>
+          <select
+            value={values.badge}
+            onChange={(e) => update("badge", e.target.value)}
+            className={inputClass}
+          >
+            {BADGE_OPTIONS.map((b) => (
+              <option key={b || "none"} value={b}>
+                {b || "無"}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1 text-[var(--ink)]">評分(0-5)</label>
+          <input
+            type="number"
+            min="0"
+            max="5"
+            step="0.1"
+            value={values.rating}
+            onChange={(e) => update("rating", e.target.value)}
+            className={inputClass}
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1 text-[var(--ink)]">評論數</label>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            value={values.reviewCount}
+            onChange={(e) => update("reviewCount", e.target.value)}
             className={inputClass}
           />
         </div>
