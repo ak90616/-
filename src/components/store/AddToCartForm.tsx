@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart/CartProvider";
+import { useToast } from "@/components/ui/ToastProvider";
+import { QuantityStepper } from "@/components/ui/QuantityStepper";
 
 export function AddToCartForm({
   product,
@@ -17,9 +19,9 @@ export function AddToCartForm({
   };
 }) {
   const { addItem } = useCart();
+  const { showToast } = useToast();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
 
   const outOfStock = product.stock === 0;
 
@@ -35,7 +37,7 @@ export function AddToCartForm({
       },
       quantity,
     );
-    setAdded(true);
+    showToast(`已加入「${product.name}」`, `數量 ${quantity}`);
   }
 
   function handleBuyNow() {
@@ -44,43 +46,33 @@ export function AddToCartForm({
   }
 
   if (outOfStock) {
-    return <p className="text-red-600 font-medium">目前缺貨中</p>;
+    return (
+      <p className="inline-flex items-center gap-2 rounded-full bg-[var(--ink)]/5 px-4 py-2 text-sm text-[var(--ink-soft)]">
+        目前缺貨中,敬請期待補貨
+      </p>
+    );
   }
 
   return (
     <div>
-      <div className="mb-4 flex items-center gap-3">
-        <label htmlFor="quantity" className="text-sm text-gray-500">
-          數量
-        </label>
-        <select
-          id="quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          className="rounded-md border px-3 py-1.5 text-sm"
-        >
-          {Array.from({ length: Math.min(product.stock, 10) }, (_, i) => i + 1).map((n) => (
-            <option key={n} value={n}>
-              {n}
-            </option>
-          ))}
-        </select>
+      <div className="mb-5 flex items-center gap-4">
+        <span className="text-sm text-[var(--ink-soft)]">數量</span>
+        <QuantityStepper value={quantity} max={Math.min(product.stock, 10)} onChange={setQuantity} />
       </div>
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         <button
           onClick={handleAdd}
-          className="rounded-md border border-gray-900 px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100"
+          className="rounded-full border border-[var(--ink)] px-6 py-3 text-sm text-[var(--ink)] transition-colors hover:bg-[var(--ink)] hover:text-white"
         >
           加入購物車
         </button>
         <button
           onClick={handleBuyNow}
-          className="rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-700"
+          className="rounded-full bg-gold-gradient px-6 py-3 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
         >
           立即購買
         </button>
       </div>
-      {added && <p className="mt-2 text-sm text-green-600">已加入購物車</p>}
     </div>
   );
 }

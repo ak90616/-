@@ -23,12 +23,15 @@ export default async function AdminDashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">儀表板</h1>
+      <h1 className="font-display mb-6 text-2xl text-[var(--ink)]">儀表板</h1>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="rounded-lg border bg-white p-5 shadow-sm">
-            <p className="text-sm text-gray-500">{stat.label}</p>
-            <p className="mt-2 text-2xl font-bold">{stat.value}</p>
+          <div
+            key={stat.label}
+            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-sm"
+          >
+            <p className="text-sm text-[var(--ink-soft)]">{stat.label}</p>
+            <p className="text-gold-gradient mt-2 text-2xl font-semibold">{stat.value}</p>
           </div>
         ))}
       </div>

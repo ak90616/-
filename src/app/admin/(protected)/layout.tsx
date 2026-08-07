@@ -13,19 +13,21 @@ export default async function AdminProtectedLayout({
   const session = verifySessionToken(cookieStore.get(SESSION_COOKIE)?.value);
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
-      <aside className="w-60 shrink-0 border-r bg-white p-4 flex flex-col gap-6">
+    <div className="flex min-h-screen bg-[var(--bg)]">
+      <aside className="flex w-60 shrink-0 flex-col gap-6 border-r border-[var(--line)] bg-[var(--surface)] p-5">
         <div>
-          <Link href="/admin" className="text-lg font-bold">
+          <Link href="/admin" className="font-display text-lg text-[var(--ink)]">
             後台管理
           </Link>
-          <p className="text-xs text-gray-400 mt-1">極簡商店</p>
+          <p className="mt-1 text-xs tracking-widest text-[var(--gold-deep)]">
+            PLATINUM PARFUM
+          </p>
         </div>
         <AdminNav />
-        <div className="mt-auto border-t pt-4">
-          <p className="text-xs text-gray-400 mb-1">{session?.email}</p>
+        <div className="mt-auto border-t border-[var(--line)] pt-4">
+          <p className="mb-2 truncate text-xs text-[var(--ink-faint)]">{session?.email}</p>
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-sm text-gray-500 hover:text-gray-900">
+            <Link href="/" className="text-sm text-[var(--ink-soft)] hover:text-[var(--gold-deep)]">
               回到前台
             </Link>
             <LogoutButton />

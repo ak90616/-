@@ -68,11 +68,22 @@ small client components that `fetch()` the matching `/api/admin/...` route and c
 `router.refresh()` on success. Follow this split rather than introducing a client-side data-fetching
 library.
 
+**Design system**: the brand ("鉑金香氛 / Platinum Parfum", a perfume storefront) is a platinum/
+champagne-gold palette defined as CSS custom properties in `src/app/globals.css` (`--gold`,
+`--ink`, `--bg`, `--gold-gradient`, etc.) plus utility classes (`text-gold-gradient`,
+`bg-gold-gradient`, `.shimmer`, `.animate-fade-up`, `.animate-pop`, `.animate-toast`). Reuse these
+tokens/utilities for new UI instead of introducing new colors or one-off keyframes. Headings use
+`font-display` (Playfair Display + Noto Serif TC, loaded via `next/font/google` in
+`src/app/layout.tsx`); body text falls back to the CJK serif. Toast feedback (e.g. after add-to-cart)
+goes through `useToast()` from `src/components/ui/ToastProvider.tsx`, not ad-hoc inline state.
+
 ## Conventions
 
 - User-facing copy is Traditional Chinese (zh-Hant); keep new UI text consistent with that.
 - Product images are a single emoji (`imageEmoji` field) rather than uploaded files — there is no
-  image upload/storage pipeline in this project.
+  image upload/storage pipeline in this project. `prisma/seed.ts` categorizes perfumes by scent
+  family (花香調/木質調/柑橘調/東方琥珀調/海洋清新調) — follow that pattern for new products rather
+  than inventing unrelated categories.
 - `prisma/seed.ts` is idempotent (`upsert` on unique fields) — safe to re-run against an existing
   database.
 

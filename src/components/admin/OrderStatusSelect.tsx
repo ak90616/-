@@ -46,7 +46,7 @@ export function OrderStatusSelect({
         value={status}
         disabled={loading}
         onChange={(e) => handleChange(e.target.value)}
-        className="rounded-md border px-3 py-2 text-sm"
+        className="rounded-lg border border-[var(--line)] px-3 py-2 text-sm outline-none transition-shadow focus:border-[var(--gold)] focus:ring-2 focus:ring-[var(--gold-light)]"
       >
         {STATUSES.map((s) => (
           <option key={s} value={s}>

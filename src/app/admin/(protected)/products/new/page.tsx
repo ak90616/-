@@ -6,7 +6,7 @@ export default async function NewProductPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">新增商品</h1>
+      <h1 className="font-display text-2xl text-[var(--ink)] mb-6">新增商品</h1>
       <ProductForm categories={categories} />
     </div>
   );

@@ -17,7 +17,7 @@ export default async function EditProductPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">編輯商品</h1>
+      <h1 className="font-display text-2xl text-[var(--ink)] mb-6">編輯商品</h1>
       <ProductForm
         categories={categories}
         productId={product.id}

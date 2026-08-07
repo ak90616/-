@@ -1,12 +1,14 @@
-# 極簡商店
+# 鉑金香氛 Platinum Parfum
 
-一個以 Next.js 打造的示範電商網站,包含前台購物流程與後台管理系統。
+一個以 Next.js 打造的示範電商網站(香水香精選物),採白金 / 香檳金基調的品牌視覺,
+包含前台購物流程與後台管理系統。
 
 ## 技術棧
 
 - [Next.js 16](https://nextjs.org/)(App Router + Turbopack)
 - TypeScript
-- Tailwind CSS 4
+- Tailwind CSS 4,搭配自訂白金/香檳金設計系統(`src/app/globals.css`)
+- `next/font/google`:Playfair Display(英文襯線)+ Noto Serif TC(中文襯線標題)
 - [Prisma 7](https://www.prisma.io/) + SQLite(`@prisma/adapter-better-sqlite3` driver adapter)
 - Zod(輸入驗證)
 - bcryptjs(密碼雜湊)
@@ -43,8 +45,10 @@ Email: admin@example.com
 ## 功能
 
 **前台(顧客)**
-- 商品列表與分類篩選(`/`)
-- 商品詳情頁(`/products/[slug]`)
+- 首頁 Hero 橫幅 + 香調分類篩選(花香調 / 東方琥珀調 / 木質調 / 柑橘調 / 海洋清新調)
+- 商品卡片 hover 互動:圖像縮放光澤、快速加入購物車按鈕
+- 商品詳情頁,含數量增減器(`/products/[slug]`)
+- 加入購物車即時顯示 toast 提示,購物車圖示數量會有彈跳動畫
 - 購物車,以 `localStorage` 保存(`/cart`)
 - 結帳流程,建立訂單並扣庫存(`/checkout`)
 - 訂單完成確認頁(`/order/[id]`)

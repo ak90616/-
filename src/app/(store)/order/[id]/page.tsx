@@ -17,39 +17,43 @@ export default async function OrderConfirmationPage({
   if (!order) notFound();
 
   return (
-    <div className="mx-auto max-w-xl">
-      <div className="mb-6 text-center">
-        <div className="text-5xl">✅</div>
-        <h1 className="mt-3 text-2xl font-bold">訂單已送出</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          我們已收到您的訂單,將盡快為您處理出貨。
+    <div className="animate-fade-up mx-auto max-w-xl">
+      <div className="mb-8 text-center">
+        <div className="animate-pop mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gold-gradient text-2xl text-white shadow-lg shadow-[#c9a35a]/30">
+          ✓
+        </div>
+        <h1 className="font-display mt-5 text-3xl text-[var(--ink)]">訂單已送出</h1>
+        <p className="mt-2 text-sm text-[var(--ink-soft)]">
+          我們已收到您的訂單,將盡快為您悉心包裝出貨。
         </p>
       </div>
 
-      <div className="rounded-lg border bg-white p-5 shadow-sm">
-        <p className="mb-3 font-mono text-xs text-gray-400">訂單編號:{order.id}</p>
-        <div className="space-y-2 text-sm">
+      <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-sm">
+        <p className="mb-4 font-mono text-xs text-[var(--ink-faint)]">訂單編號:{order.id}</p>
+        <div className="space-y-3 text-sm">
           {order.items.map((item) => (
-            <div key={item.id} className="flex justify-between">
-              <span className="text-gray-600">
+            <div key={item.id} className="flex justify-between gap-3">
+              <span className="text-[var(--ink-soft)]">
                 {item.productName} × {item.quantity}
               </span>
-              <span>{formatCents(item.unitCents * item.quantity)}</span>
+              <span className="shrink-0 text-[var(--ink)]">
+                {formatCents(item.unitCents * item.quantity)}
+              </span>
             </div>
           ))}
         </div>
-        <div className="mt-4 flex justify-between border-t pt-4 font-semibold">
-          <span>總計</span>
-          <span>{formatCents(order.totalCents)}</span>
+        <div className="mt-5 flex justify-between border-t border-[var(--line)] pt-5">
+          <span className="font-display text-[var(--ink)]">總計</span>
+          <span className="text-gold-gradient font-medium">{formatCents(order.totalCents)}</span>
         </div>
       </div>
 
-      <div className="mt-6 text-center">
+      <div className="mt-8 text-center">
         <Link
           href="/"
-          className="inline-block rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-white hover:bg-gray-700"
+          className="inline-block rounded-full bg-gold-gradient px-8 py-3.5 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
         >
-          繼續購物
+          繼續選購
         </Link>
       </div>
     </div>

@@ -6,6 +6,9 @@ import Link from "next/link";
 import { useCart } from "@/components/cart/CartProvider";
 import { formatCents } from "@/lib/money";
 
+const inputClass =
+  "w-full rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-2.5 text-sm text-[var(--ink)] outline-none transition-shadow focus:border-[var(--gold)] focus:ring-2 focus:ring-[var(--gold-light)]";
+
 export default function CheckoutPage() {
   const { items, totalCents, clear } = useCart();
   const router = useRouter();
@@ -50,91 +53,93 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="py-16 text-center">
-        <p className="text-gray-500">購物車是空的,無法結帳</p>
+      <div className="animate-fade-up py-20 text-center">
+        <p className="text-[var(--ink-soft)]">購物車是空的,無法結帳</p>
         <Link
           href="/"
-          className="mt-4 inline-block rounded-md bg-gray-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-700"
+          className="mt-6 inline-block rounded-full bg-gold-gradient px-7 py-3 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
         >
-          繼續購物
+          繼續選購
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-8 md:grid-cols-3">
-      <form onSubmit={handleSubmit} className="md:col-span-2 space-y-4">
-        <h1 className="text-2xl font-bold">結帳</h1>
+    <div className="animate-fade-up grid gap-10 md:grid-cols-3">
+      <form onSubmit={handleSubmit} className="space-y-5 md:col-span-2">
+        <h1 className="font-display text-3xl text-[var(--ink)]">結帳</h1>
 
         <div>
-          <label className="block text-sm font-medium mb-1">收件人姓名</label>
+          <label className="mb-1.5 block text-sm text-[var(--ink-soft)]">收件人姓名</label>
           <input
             value={form.customerName}
             onChange={(e) => update("customerName", e.target.value)}
             required
-            className="w-full rounded-md border px-3 py-2 text-sm"
+            className={inputClass}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">Email</label>
+          <label className="mb-1.5 block text-sm text-[var(--ink-soft)]">Email</label>
           <input
             type="email"
             value={form.customerEmail}
             onChange={(e) => update("customerEmail", e.target.value)}
             required
-            className="w-full rounded-md border px-3 py-2 text-sm"
+            className={inputClass}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">電話</label>
+          <label className="mb-1.5 block text-sm text-[var(--ink-soft)]">電話</label>
           <input
             value={form.customerPhone}
             onChange={(e) => update("customerPhone", e.target.value)}
             required
-            className="w-full rounded-md border px-3 py-2 text-sm"
+            className={inputClass}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">收件地址</label>
+          <label className="mb-1.5 block text-sm text-[var(--ink-soft)]">收件地址</label>
           <textarea
             value={form.address}
             onChange={(e) => update("address", e.target.value)}
             required
             rows={2}
-            className="w-full rounded-md border px-3 py-2 text-sm"
+            className={inputClass}
           />
         </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-red-500">{error}</p>}
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-gray-900 px-5 py-3 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50"
+          className="w-full rounded-full bg-gold-gradient px-6 py-3.5 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
         >
-          {loading ? "處理中…" : `送出訂單 (${formatCents(totalCents)})`}
+          {loading ? "處理中…" : `送出訂單・${formatCents(totalCents)}`}
         </button>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-[var(--ink-faint)]">
           示範用結帳流程,不會產生實際金流交易。
         </p>
       </form>
 
-      <div className="rounded-lg border bg-white p-5 shadow-sm h-fit">
-        <h2 className="mb-3 font-semibold">訂單摘要</h2>
-        <div className="space-y-2 text-sm">
+      <div className="h-fit rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-sm">
+        <h2 className="font-display mb-4 text-lg text-[var(--ink)]">訂單摘要</h2>
+        <div className="space-y-3 text-sm">
           {items.map((item) => (
-            <div key={item.productId} className="flex justify-between">
-              <span className="text-gray-600">
+            <div key={item.productId} className="flex justify-between gap-3">
+              <span className="text-[var(--ink-soft)]">
                 {item.name} × {item.quantity}
               </span>
-              <span>{formatCents(item.priceCents * item.quantity)}</span>
+              <span className="shrink-0 text-[var(--ink)]">
+                {formatCents(item.priceCents * item.quantity)}
+              </span>
             </div>
           ))}
         </div>
-        <div className="mt-4 flex justify-between border-t pt-4 font-semibold">
-          <span>總計</span>
-          <span>{formatCents(totalCents)}</span>
+        <div className="mt-5 flex justify-between border-t border-[var(--line)] pt-5">
+          <span className="font-display text-[var(--ink)]">總計</span>
+          <span className="text-gold-gradient font-medium">{formatCents(totalCents)}</span>
         </div>
       </div>
     </div>

@@ -12,18 +12,18 @@ export default async function AdminProductsPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">商品管理</h1>
+        <h1 className="font-display text-2xl text-[var(--ink)]">商品管理</h1>
         <Link
           href="/admin/products/new"
-          className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700"
+          className="rounded-full bg-gold-gradient px-5 py-2.5 text-sm text-white shadow-md shadow-[#c9a35a]/30 transition-transform hover:scale-105"
         >
           新增商品
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-lg border bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)] shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-gray-500">
+          <thead className="bg-[var(--bg)] text-left text-[var(--ink-soft)]">
             <tr>
               <th className="px-4 py-3 font-medium">商品</th>
               <th className="px-4 py-3 font-medium">分類</th>
@@ -32,29 +32,29 @@ export default async function AdminProductsPage() {
               <th className="px-4 py-3 font-medium text-right">操作</th>
             </tr>
           </thead>
-          <tbody className="divide-y">
+          <tbody className="divide-y divide-[var(--line)]">
             {products.map((product) => (
-              <tr key={product.id}>
+              <tr key={product.id} className="transition-colors hover:bg-[var(--bg)]">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <span className="text-xl">{product.imageEmoji}</span>
-                    <span className="font-medium">{product.name}</span>
+                    <span className="font-medium text-[var(--ink)]">{product.name}</span>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-gray-500">{product.category.name}</td>
-                <td className="px-4 py-3">{formatCents(product.priceCents)}</td>
+                <td className="px-4 py-3 text-[var(--ink-soft)]">{product.category.name}</td>
+                <td className="px-4 py-3 text-[var(--ink)]">{formatCents(product.priceCents)}</td>
                 <td className="px-4 py-3">
                   {product.stock === 0 ? (
-                    <span className="text-red-600">缺貨</span>
+                    <span className="text-red-500">缺貨</span>
                   ) : (
-                    product.stock
+                    <span className="text-[var(--ink)]">{product.stock}</span>
                   )}
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-end gap-3">
                     <Link
                       href={`/admin/products/${product.id}/edit`}
-                      className="text-sm text-gray-600 hover:text-gray-900"
+                      className="text-sm text-[var(--ink-soft)] hover:text-[var(--gold-deep)]"
                     >
                       編輯
                     </Link>
@@ -68,7 +68,7 @@ export default async function AdminProductsPage() {
             ))}
             {products.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-gray-400">
+                <td colSpan={5} className="px-4 py-8 text-center text-[var(--ink-faint)]">
                   尚無商品
                 </td>
               </tr>

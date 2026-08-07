@@ -11,11 +11,11 @@ export default async function AdminOrdersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">訂單管理</h1>
+      <h1 className="font-display text-2xl text-[var(--ink)] mb-6">訂單管理</h1>
 
-      <div className="overflow-hidden rounded-lg border bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)] shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-gray-500">
+          <thead className="bg-[var(--bg)] text-left text-[var(--ink-soft)]">
             <tr>
               <th className="px-4 py-3 font-medium">訂單編號</th>
               <th className="px-4 py-3 font-medium">客戶</th>
@@ -25,34 +25,34 @@ export default async function AdminOrdersPage() {
               <th className="px-4 py-3 font-medium">建立時間</th>
             </tr>
           </thead>
-          <tbody className="divide-y">
+          <tbody className="divide-y divide-[var(--line)]">
             {orders.map((order) => (
-              <tr key={order.id} className="hover:bg-gray-50">
+              <tr key={order.id} className="transition-colors hover:bg-[var(--bg)]">
                 <td className="px-4 py-3">
                   <Link
                     href={`/admin/orders/${order.id}`}
-                    className="font-mono text-xs text-gray-700 hover:underline"
+                    className="font-mono text-xs text-[var(--ink-soft)] hover:text-[var(--gold-deep)] hover:underline"
                   >
                     {order.id.slice(0, 10)}…
                   </Link>
                 </td>
                 <td className="px-4 py-3">
-                  <div>{order.customerName}</div>
-                  <div className="text-xs text-gray-400">{order.customerEmail}</div>
+                  <div className="text-[var(--ink)]">{order.customerName}</div>
+                  <div className="text-xs text-[var(--ink-faint)]">{order.customerEmail}</div>
                 </td>
-                <td className="px-4 py-3">{order.items.length}</td>
-                <td className="px-4 py-3">{formatCents(order.totalCents)}</td>
+                <td className="px-4 py-3 text-[var(--ink)]">{order.items.length}</td>
+                <td className="px-4 py-3 text-[var(--ink)]">{formatCents(order.totalCents)}</td>
                 <td className="px-4 py-3">
                   <OrderStatusBadge status={order.status} />
                 </td>
-                <td className="px-4 py-3 text-gray-500">
+                <td className="px-4 py-3 text-[var(--ink-soft)]">
                   {order.createdAt.toLocaleString("zh-TW")}
                 </td>
               </tr>
             ))}
             {orders.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-gray-400">
+                <td colSpan={6} className="px-4 py-8 text-center text-[var(--ink-faint)]">
                   尚無訂單
                 </td>
               </tr>
