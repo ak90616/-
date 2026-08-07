@@ -29,6 +29,10 @@ npm run lint     # 執行 oxlint 檢查
 
 語音辨識與朗讀功能仰賴瀏覽器的 Web Speech API，建議使用 **Chrome** 開啟以獲得最佳體驗；不支援的瀏覽器仍可使用文字輸入方式進行翻譯。
 
+## 部署（GitHub Pages）
+
+`main` 分支每次有新的 push，`.github/workflows/deploy-pages.yml` 就會自動打包並發布到 GitHub Pages。第一次使用前，到該 repo 的 **Settings → Pages → Build and deployment → Source**，選擇 **GitHub Actions**（若尚未設定）。之後網站會在 `https://<你的帳號>.github.io/-/` 上線。
+
 ## 專案結構
 
 ```
