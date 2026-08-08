@@ -12,6 +12,13 @@
   --ember: #b8272c;
   --shadow-deep: rgba(5, 2, 2, 0.6);
 
+  --olive: #2c2a1a;
+  --olive-2: #1c1b10;
+  --olive-glow: #d98a3d;
+  --sage: #4d5640;
+  --sage-2: #33392b;
+  --sage-gold: #cda43a;
+
   --spot-x: 50%;
   --spot-y: 30%;
 }

@@ -11,9 +11,9 @@ export function Nav() {
       </span>
       <Button
         size="sm"
-        onClick={() => document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" })}
+        onClick={() => document.getElementById("collection")?.scrollIntoView({ behavior: "smooth" })}
       >
-        探索系列
+        系列選粹
       </Button>
     </header>
   )
