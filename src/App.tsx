@@ -6,15 +6,17 @@ import { Flashcard } from "./components/Flashcard";
 import { QuizMode } from "./components/QuizMode";
 import { VoiceTranslator } from "./components/VoiceTranslator";
 import { ProgressStats } from "./components/ProgressStats";
+import { GeminiDebate } from "./components/GeminiDebate";
 
 type CategoryFilter = CategoryId | "all" | "starred";
-type MainTab = "library" | "voice" | "quiz";
+type MainTab = "library" | "voice" | "quiz" | "gemini";
 type ViewMode = "list" | "flashcard";
 
 const TABS: { id: MainTab; label: string; emoji: string }[] = [
   { id: "library", label: "字彙庫", emoji: "📚" },
   { id: "voice", label: "語音翻譯", emoji: "🎙️" },
   { id: "quiz", label: "測驗", emoji: "📝" },
+  { id: "gemini", label: "AI 辯論", emoji: "🤖" },
 ];
 
 function filterItems(
@@ -228,6 +230,8 @@ function App() {
             <QuizMode items={quizItems} key={`${catFilter}-${onlyKey}`} />
           </div>
         )}
+
+        {tab === "gemini" && <GeminiDebate />}
       </main>
 
       <footer className="mx-auto max-w-5xl px-4 pb-8 pt-4 text-center text-xs text-slate-400">
