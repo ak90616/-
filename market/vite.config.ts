@@ -12,4 +12,12 @@ export default defineConfig(({ command }) => ({
       '@': path.resolve(import.meta.dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(import.meta.dirname, 'index.html'),
+        lounge: path.resolve(import.meta.dirname, 'lounge.html'),
+      },
+    },
+  },
 }))
