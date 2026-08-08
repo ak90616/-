@@ -6,197 +6,149 @@ import stageCrowd from "@/assets/photos/stage-crowd.jpg"
 import stageMic from "@/assets/photos/stage-mic.jpg"
 import stageDuo from "@/assets/photos/stage-duo.jpg"
 
-type Frame = {
-  no: string
+type Photo = {
   src: string
   alt: string
-  date: string
-  note: string
-  rotate: string
+  tag: string
+  span?: string
 }
 
-const frames: Frame[] = [
+const photos: Photo[] = [
   {
-    no: "01",
     src: portraitMask,
     alt: "戴口罩的人像特寫，紅棕色頭髮，夜間現場燈光",
-    date: "'24.11",
-    note: "AVAILABLE LIGHT",
-    rotate: "-rotate-1",
+    tag: "Portrait",
+    span: "sm:col-span-2 sm:row-span-2",
   },
   {
-    no: "02",
     src: portraitCity,
     alt: "夜晚城市燈火前的人像，手扶著頭微笑",
-    date: "'23.09",
-    note: "HANDHELD · 1/60",
-    rotate: "rotate-1",
+    tag: "Portrait",
   },
   {
-    no: "03",
     src: stageCrowd,
     alt: "舞台上逆光的捲髮側影，手臂高舉",
-    date: "'22.02",
-    note: "BACKLIT",
-    rotate: "-rotate-1",
+    tag: "Live",
   },
   {
-    no: "04",
     src: stageMic,
     alt: "表演者拿著麥克風，舉手向觀眾致意",
-    date: "'22.02",
-    note: "STAGE · LOW LIGHT",
-    rotate: "rotate-1",
+    tag: "Live",
+    span: "sm:col-span-2",
   },
   {
-    no: "05",
     src: stageDuo,
     alt: "兩位表演者在舞台上，其中一人舉起麥克風",
-    date: "'22.02",
-    note: "NIGHT ROLL",
-    rotate: "-rotate-1",
+    tag: "Live",
   },
 ]
 
-const tickerText =
-  "NIGHT ROLL — 35mm — AVAILABLE LIGHT ONLY — DEVELOPED BY HAND — NO FLASH — "
+const email = "zhixiangzhang14@gmail.com"
+const instagramHandle = "chang_chih_"
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-[var(--bg)] text-[var(--fg)]">
-      <div className="grain-overlay" />
-      <div className="scanline-overlay" />
-      <div className="vignette" />
+    <div className="relative min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--fg)]">
+      <div className="glow-blob left-[-10%] top-[-10%] h-96 w-96 bg-[var(--accent)]" />
+      <div className="glow-blob right-[-10%] top-[20%] h-96 w-96 bg-[var(--accent-2)]" />
 
-      <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-5 py-4 sm:px-10">
-        <a
-          href="#top"
-          className="font-mono-retro flex items-center gap-2 text-xs tracking-[0.25em] text-[var(--fg)]/80"
-        >
-          <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent)]" />
-          N. ROLL
-        </a>
-        <nav className="font-mono-retro flex gap-5 text-[11px] tracking-[0.2em] text-[var(--fg)]/60">
-          <a href="#roll" className="hover:text-[var(--accent)]">
-            INDEX
+      <header className="glass-nav fixed inset-x-0 top-0 z-50">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
+          <a href="#top" className="text-sm font-semibold tracking-tight">
+            Kai<span className="text-[var(--accent)]">.</span>
           </a>
-          <a href="#about" className="hover:text-[var(--accent)]">
-            ABOUT
-          </a>
-          <a href="#contact" className="hover:text-[var(--accent)]">
-            CONTACT
-          </a>
-        </nav>
+          <nav className="flex gap-6 text-sm text-[var(--muted)]">
+            <a href="#work" className="transition-colors hover:text-[var(--fg)]">
+              Work
+            </a>
+            <a href="#about" className="transition-colors hover:text-[var(--fg)]">
+              About
+            </a>
+            <a href="#contact" className="transition-colors hover:text-[var(--fg)]">
+              Contact
+            </a>
+          </nav>
+        </div>
       </header>
 
-      <main id="top">
+      <main id="top" className="relative z-10">
         {/* hero */}
-        <section className="relative flex h-[100svh] min-h-[560px] w-full items-end overflow-hidden">
-          <img
-            src={portraitMask}
-            alt="戴口罩的人像特寫，作為作品集封面照片"
-            className="frame-photo absolute inset-0 h-full w-full object-cover object-[center_25%]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-[var(--bg)]/10 to-transparent" />
-          <div className="relative z-10 w-full px-5 pb-24 sm:px-10 sm:pb-28">
-            <p className="font-mono-retro mb-3 text-[11px] tracking-[0.3em] text-[var(--accent-2)]">
-              PORTFOLIO — ROLL NO. 07
-            </p>
-            <h1 className="font-display text-5xl italic leading-[0.95] sm:text-7xl md:text-8xl">
-              YOUR NAME
-            </h1>
-            <p className="mt-5 max-w-md text-sm text-[var(--muted)] sm:text-base">
-              夜色裡拍下的畫面，用底片的眼光看數位時代。
-              現場光、手持、不打閃燈。
-            </p>
+        <section className="mx-auto flex min-h-[92svh] max-w-6xl flex-col justify-center px-5 pt-24 sm:px-8">
+          <p className="font-mono-tag mb-4 text-xs tracking-[0.2em] text-[var(--muted)]">
+            PHOTOGRAPHY PORTFOLIO
+          </p>
+          <h1 className="text-6xl font-semibold leading-[1.02] tracking-tight sm:text-7xl md:text-8xl">
+            Hi, I'm <span className="text-gradient">Kai</span>.
+          </h1>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
+            拍夜晚的人像跟現場演出。喜歡不打光、讓氣氛自己說話的瞬間。
+            目前在台灣接案，開放合作邀約。
+          </p>
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <a href="#work">
+              <Button size="lg">看作品</Button>
+            </a>
+            <a href="#contact">
+              <Button size="lg" variant="outline">
+                聯絡我
+              </Button>
+            </a>
           </div>
         </section>
 
-        {/* marquee ticker */}
-        <div className="filmstrip-rail relative z-10 overflow-hidden py-3">
-          <div className="marquee-track font-mono-retro text-xs tracking-[0.3em] text-[var(--accent-2)]">
-            <span className="px-4">{tickerText.repeat(4)}</span>
-            <span className="px-4" aria-hidden="true">
-              {tickerText.repeat(4)}
-            </span>
-          </div>
-        </div>
-
-        {/* the roll / gallery */}
-        <section id="roll" className="px-5 py-20 sm:px-10 sm:py-28">
-          <div className="mb-12 flex items-end justify-between gap-4">
-            <h2 className="font-display text-3xl italic sm:text-4xl">
-              The Roll
+        {/* work / gallery */}
+        <section id="work" className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+          <div className="mb-10 flex items-end justify-between gap-4">
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+              Selected Work
             </h2>
-            <p className="font-mono-retro text-[11px] tracking-[0.2em] text-[var(--muted)]">
-              05 FRAMES / 35MM
+            <p className="font-mono-tag hidden text-xs tracking-[0.15em] text-[var(--muted)] sm:block">
+              05 PHOTOS
             </p>
           </div>
 
-          <div className="filmstrip-rail rounded-sm">
-            <div className="sprockets">
-              {Array.from({ length: 24 }).map((_, i) => (
-                <span key={i} />
-              ))}
-            </div>
-
-            <div className="grid grid-cols-1 gap-8 p-5 sm:grid-cols-2 sm:gap-10 sm:p-10 lg:grid-cols-3">
-              {frames.map((frame) => (
-                <figure
-                  key={frame.no}
-                  className={`frame-card ${frame.rotate} rounded-[2px] bg-[var(--paper)] p-2.5 pb-8 shadow-[0_18px_40px_-20px_rgba(0,0,0,0.8)]`}
-                >
-                  <div className="relative overflow-hidden bg-black">
-                    <img
-                      src={frame.src}
-                      alt={frame.alt}
-                      loading="lazy"
-                      className="frame-photo aspect-[3/2] w-full object-cover"
-                    />
-                    <span className="font-mono-retro absolute left-2 top-2 bg-black/60 px-1.5 py-0.5 text-[10px] tracking-widest text-[var(--paper)]">
-                      N°{frame.no}
-                    </span>
-                  </div>
-                  <figcaption className="font-mono-retro mt-2 flex items-center justify-between text-[10px] tracking-[0.15em] text-[var(--bg)]/70">
-                    <span>{frame.note}</span>
-                    <span>{frame.date}</span>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-
-            <div className="sprockets">
-              {Array.from({ length: 24 }).map((_, i) => (
-                <span key={i} />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 sm:auto-rows-[220px]">
+            {photos.map((photo) => (
+              <figure
+                key={photo.src}
+                className={`card group relative aspect-[4/3] sm:aspect-auto ${photo.span ?? ""}`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  className="card-photo h-full w-full object-cover"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <figcaption className="font-mono-tag absolute bottom-3 left-3 translate-y-2 text-xs tracking-[0.15em] text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  {photo.tag.toUpperCase()}
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </section>
 
         {/* about */}
         <section
           id="about"
-          className="border-t border-[var(--line)] px-5 py-20 sm:px-10 sm:py-28"
+          className="border-t border-[var(--line)] px-5 py-24 sm:px-8 sm:py-32"
         >
-          <div className="grid gap-10 sm:grid-cols-[1fr_1fr]">
-            <h2 className="font-display text-3xl italic sm:text-4xl">
-              About the Roll
+          <div className="mx-auto grid max-w-6xl gap-10 sm:grid-cols-[1fr_1fr]">
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+              About
             </h2>
-            <div className="space-y-5 text-sm leading-relaxed text-[var(--muted)] sm:text-base">
+            <div className="space-y-6 text-base leading-relaxed text-[var(--muted)]">
               <p>
-                長期用底片邏輯拍數位相機——不打光、不補閃，只等現場的光線自己說話。
-                拍人像，也拍舞台上的瞬間。這裡收錄的是幾捲比較喜歡的「夜間卷」。
+                我是 Kai，拍人像跟現場演出。不打燈、不補閃，讓現場的光線跟氣氛留在照片裡。
+                目前住在台灣，接人像、活動與樂團現場拍攝的案子。
               </p>
-              <dl className="font-mono-retro grid grid-cols-2 gap-y-3 border-t border-[var(--line)] pt-5 text-[11px] tracking-[0.15em] text-[var(--fg)]/70 sm:text-xs">
-                <dt className="text-[var(--muted)]">GEAR</dt>
-                <dd>CANON EOS 6D / 650D</dd>
-                <dt className="text-[var(--muted)]">STYLE</dt>
-                <dd>AVAILABLE LIGHT, NO FLASH</dd>
-                <dt className="text-[var(--muted)]">BASED IN</dt>
-                <dd>YOUR CITY</dd>
-                <dt className="text-[var(--muted)]">STATUS</dt>
-                <dd>OPEN FOR BOOKINGS</dd>
-              </dl>
+              <div className="flex flex-wrap gap-2">
+                <span className="chip">Available Light</span>
+                <span className="chip">Portrait</span>
+                <span className="chip">Live / Concert</span>
+                <span className="chip">Based in Taiwan</span>
+                <span className="chip">Open for bookings</span>
+              </div>
             </div>
           </div>
         </section>
@@ -204,20 +156,20 @@ function App() {
         {/* contact */}
         <section
           id="contact"
-          className="border-t border-[var(--line)] px-5 py-20 text-center sm:px-10 sm:py-28"
+          className="border-t border-[var(--line)] px-5 py-24 text-center sm:px-8 sm:py-32"
         >
-          <p className="font-mono-retro mb-4 text-[11px] tracking-[0.3em] text-[var(--accent-2)]">
-            SHOOT SOMETHING TOGETHER
+          <p className="font-mono-tag mb-4 text-xs tracking-[0.2em] text-[var(--muted)]">
+            LET'S WORK TOGETHER
           </p>
-          <h2 className="font-display mx-auto max-w-2xl text-4xl italic leading-tight sm:text-6xl">
-            Let's make a night roll.
+          <h2 className="mx-auto max-w-2xl text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
+            Got a shoot in mind?
           </h2>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <a href="mailto:you@example.com">
+            <a href={`mailto:${email}`}>
               <Button size="lg">寄信給我</Button>
             </a>
             <a
-              href="https://instagram.com"
+              href={`https://instagram.com/${instagramHandle}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -226,13 +178,16 @@ function App() {
               </Button>
             </a>
           </div>
+          <p className="font-mono-tag mt-8 text-xs tracking-[0.1em] text-[var(--muted)]">
+            {email}
+          </p>
         </section>
       </main>
 
-      <footer className="font-mono-retro flex flex-col items-center gap-2 border-t border-[var(--line)] px-5 py-8 text-center text-[10px] tracking-[0.2em] text-[var(--muted)] sm:flex-row sm:justify-between sm:px-10">
-        <span>© {new Date().getFullYear()} YOUR NAME — ALL FRAMES SHOT ON LOCATION</span>
-        <a href="#top" className="hover:text-[var(--accent)]">
-          BACK TO TOP ↑
+      <footer className="relative z-10 flex flex-col items-center gap-2 border-t border-[var(--line)] px-5 py-8 text-center text-xs text-[var(--muted)] sm:flex-row sm:justify-between sm:px-8">
+        <span>© {new Date().getFullYear()} Kai — Taiwan</span>
+        <a href="#top" className="transition-colors hover:text-[var(--fg)]">
+          Back to top ↑
         </a>
       </footer>
     </div>
