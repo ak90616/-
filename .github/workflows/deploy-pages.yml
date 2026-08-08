@@ -40,6 +40,11 @@ jobs:
       - run: npm run build
         working-directory: resort
       - run: cp -r resort/dist dist/resort
+      - run: npm ci
+        working-directory: fragrance
+      - run: npm run build
+        working-directory: fragrance
+      - run: cp -r fragrance/dist dist/fragrance
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

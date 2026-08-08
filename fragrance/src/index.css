@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  color-scheme: dark;
+  --ink: #0c0505;
+  --paper: #f7ece4;
+  --paper-muted: rgba(247, 236, 228, 0.72);
+  --line: rgba(247, 236, 228, 0.16);
+  --accent: #c8793f;
+  --accent-2: #7a1f22;
+  --ember: #b8272c;
+  --shadow-deep: rgba(5, 2, 2, 0.6);
+
+  --spot-x: 50%;
+  --spot-y: 30%;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Noto Sans TC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.font-display {
+  font-family: "Cormorant Garamond", "Playfair Display", ui-serif, Georgia,
+    "Noto Serif TC", serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+/* --- cursor-follow ambient spotlight, desktop pointer devices only --- */
+.spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    480px circle at var(--spot-x) var(--spot-y),
+    rgba(200, 121, 63, 0.14),
+    transparent 70%
+  );
+  transition: opacity 0.4s ease;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .spotlight {
+    display: none;
+  }
+}
+
+/* --- scroll reveal --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- parallax layers: JS writes --parallax-y as scroll offset in px --- */
+.parallax-layer {
+  transform: translate3d(0, calc(var(--parallax-y, 0) * 1px), 0);
+  will-change: transform;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+}
