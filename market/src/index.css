@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  color-scheme: light;
+  --paper: #f3f1e7;
+  --paper-2: #e9e6d8;
+  --ink: #16150f;
+  --ink-muted: #6f6c5e;
+  --line: rgba(22, 21, 15, 0.16);
+  --line-strong: rgba(22, 21, 15, 0.32);
+  --accent: #e0592c;
+  --accent-2: #3c6b45;
+  --dark: #0c0c0a;
+  --dark-2: #17160f;
+  --dark-fg: #f3f1e7;
+  --dark-line: rgba(243, 241, 231, 0.14);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Noto Sans TC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.font-mono-tag {
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+}
+
+/* --- label text rotated along the edge of a panel, like a shipping tag --- */
+.edge-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.18em;
+}
+
+.edge-label.flip {
+  transform: rotate(180deg);
+}
+
+/* --- dashed "tear here" receipt divider --- */
+.tear-line {
+  border-top: 2px dashed var(--line-strong);
+  position: relative;
+}
+
+.tear-line::before,
+.tear-line::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--dark);
+}
+
+.tear-line::before {
+  left: -9px;
+}
+
+.tear-line::after {
+  right: -9px;
+}
+
+/* --- scrolling marquee ticker --- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 26s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* --- CSS 3D product packaging box --- */
+.box-stage {
+  perspective: 1400px;
+}
+
+.box-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.box-float {
+  animation: box-idle 7s ease-in-out infinite;
+}
+
+@keyframes box-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.box-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border: 1px solid var(--line-strong);
+}
+
+/* --- scroll reveal --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+}
