@@ -1,0 +1,66 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  color-scheme: dark;
+  --ink: #0b0d10;
+  --paper: #faf7f0;
+  --paper-muted: rgba(250, 247, 240, 0.72);
+  --line: rgba(250, 247, 240, 0.18);
+  --accent: #e8a34c;
+  --accent-2: #4fb3a9;
+  --shadow-deep: rgba(6, 8, 10, 0.55);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Noto Sans TC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.font-display {
+  font-family: "Playfair Display", ui-serif, Georgia, "Noto Serif TC", serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+/* --- scroll reveal --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- parallax layers: JS writes --parallax-y as scroll offset in px --- */
+.parallax-layer {
+  transform: translate3d(0, calc(var(--parallax-y, 0) * 1px), 0);
+  will-change: transform;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+}

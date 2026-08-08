@@ -35,6 +35,11 @@ jobs:
       - run: npm run build
         working-directory: market
       - run: cp -r market/dist dist/market
+      - run: npm ci
+        working-directory: resort
+      - run: npm run build
+        working-directory: resort
+      - run: cp -r resort/dist dist/resort
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
