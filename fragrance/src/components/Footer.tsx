@@ -22,7 +22,7 @@ export function Footer() {
       <footer className="relative mt-24 flex flex-col items-center gap-2 border-t border-[var(--line)] pt-8 text-xs text-[var(--paper-muted)]">
         <span className="font-display tracking-[0.2em] text-[var(--paper)]">DIVINY — NOBLE PRESENCE</span>
         <p>這是一個設計概念展示頁，用於互動網頁技術演示，非官方網站，不接受實際訂購</p>
-        <p>品牌名稱與商標為原廠所有 &middot; Terre d'Hermès、Oud Wood、Paige Luminous 卡片為情境示意，非商品實拍</p>
+        <p>圖片與品牌名稱、商標為原廠所有，僅作系列選粹之視覺參考</p>
       </footer>
     </section>
   )

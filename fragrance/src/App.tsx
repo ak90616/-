@@ -44,6 +44,21 @@ export default function App() {
           每一次噴灑，都是一次儀式。
         </p>
       </ParallaxSection>
+      <ParallaxSection
+        id="oudwood"
+        image={`${import.meta.env.BASE_URL}products/oudwood-story.jpg`}
+        alt="Tom Ford Oud Wood 香水瓶懸於一塊漂浮岩石與嫩枝之間，佇立水面上，暗綠色調背景"
+        eyebrow="Tom Ford"
+        title="根系深扎，木質甦醒"
+        align="left"
+        speed={0.14}
+      >
+        <p>
+          一截枯枝托住新生的嫩芽，懸在水面之上——
+          沉香木的厚重與玫瑰木的柔和在此交會，
+          辛香調收尾於溫暖的琥珀與香草。
+        </p>
+      </ParallaxSection>
       <Bloom />
       <Collection />
       <Footer />
