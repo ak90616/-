@@ -93,37 +93,6 @@ body {
   }
 }
 
-/* --- CSS 3D product packaging box --- */
-.box-stage {
-  perspective: 1400px;
-}
-
-.box-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.box-float {
-  animation: box-idle 7s ease-in-out infinite;
-}
-
-@keyframes box-idle {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.box-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  border: 1px solid var(--line-strong);
-}
-
 /* --- scroll reveal --- */
 .reveal {
   opacity: 0;
