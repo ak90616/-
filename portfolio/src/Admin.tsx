@@ -19,8 +19,9 @@ const categoryLabels: Record<StorageCategory, string> = {
 
 function Admin() {
   const [category, setCategory] = useState<StorageCategory>("portrait")
-  const [file, setFile] = useState<File | null>(null)
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [uploading, setUploading] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [files, setFiles] = useState<StoredFile[]>([])
   const [loading, setLoading] = useState(true)
@@ -57,19 +58,28 @@ function Admin() {
 
   async function handleUpload(e: React.FormEvent) {
     e.preventDefault()
-    if (!supabase || !file) return
+    if (!supabase || selectedFiles.length === 0) return
     setUploading(true)
     setError(null)
-    const path = `${category}/${Date.now()}-${file.name}`
-    const { error: uploadError } = await supabase.storage
-      .from(WORKS_BUCKET)
-      .upload(path, file)
-    setUploading(false)
-    if (uploadError) {
-      setError(uploadError.message)
-      return
+    setUploadProgress({ done: 0, total: selectedFiles.length })
+
+    const failures: string[] = []
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const f = selectedFiles[i]
+      const path = `${category}/${Date.now()}-${f.name}`
+      const { error: uploadError } = await supabase.storage
+        .from(WORKS_BUCKET)
+        .upload(path, f)
+      if (uploadError) failures.push(`${f.name}: ${uploadError.message}`)
+      setUploadProgress({ done: i + 1, total: selectedFiles.length })
     }
-    setFile(null)
+
+    setUploading(false)
+    setUploadProgress(null)
+    if (failures.length > 0) {
+      setError(failures.join("\n"))
+    }
+    setSelectedFiles([])
     const input = document.getElementById("file-input") as HTMLInputElement | null
     if (input) input.value = ""
     refresh()
@@ -124,15 +134,30 @@ function Admin() {
           <input
             id="file-input"
             type="file"
+            multiple
             accept={category === "video" ? "video/*" : "image/*"}
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            onChange={(e) => setSelectedFiles(Array.from(e.target.files ?? []))}
             className="text-sm text-[var(--muted)]"
           />
 
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {selectedFiles.length > 0 && (
+            <p className="text-sm text-[var(--muted)]">
+              已選 {selectedFiles.length} 個檔案
+            </p>
+          )}
 
-          <Button type="submit" disabled={!file || uploading} className="w-fit">
-            {uploading ? "上傳中…" : "上傳"}
+          {error && (
+            <p className="whitespace-pre-line text-sm text-red-400">{error}</p>
+          )}
+
+          <Button
+            type="submit"
+            disabled={selectedFiles.length === 0 || uploading}
+            className="w-fit"
+          >
+            {uploading
+              ? `上傳中… (${uploadProgress?.done ?? 0}/${uploadProgress?.total ?? selectedFiles.length})`
+              : "上傳"}
           </Button>
         </form>
 
