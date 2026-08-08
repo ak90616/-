@@ -30,6 +30,11 @@ jobs:
       - run: npm run build
         working-directory: portfolio
       - run: cp -r portfolio/dist dist/portfolio
+      - run: npm ci
+        working-directory: market
+      - run: npm run build
+        working-directory: market
+      - run: cp -r market/dist dist/market
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
