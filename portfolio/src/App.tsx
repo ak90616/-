@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import Reveal from "@/components/Reveal"
 import Lightbox, { type LightboxItem } from "@/components/Lightbox"
+import { supabase, storageCategories, WORKS_BUCKET } from "@/lib/supabase"
 
 import portraitMask from "@/assets/photos/portrait-mask.jpg"
 import portraitCity from "@/assets/photos/portrait-city.jpg"
@@ -25,7 +26,13 @@ type Work = {
   span?: string
 }
 
-const works: Work[] = [
+const categoryFromStorage: Record<string, Category> = {
+  portrait: "Portrait",
+  live: "Live",
+  video: "Video",
+}
+
+const staticWorks: Work[] = [
   {
     type: "photo",
     src: portraitMask,
@@ -83,14 +90,49 @@ const instagramHandle = "chang_chih_"
 function App() {
   const [activeCategory, setActiveCategory] = useState<Category | "All">("All")
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [uploadedWorks, setUploadedWorks] = useState<Work[]>([])
   const heroRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!supabase) return
+    let cancelled = false
+
+    async function loadUploaded() {
+      const results: Work[] = []
+      for (const cat of storageCategories) {
+        const { data, error } = await supabase!.storage
+          .from(WORKS_BUCKET)
+          .list(cat, { sortBy: { column: "created_at", order: "desc" } })
+        if (error || !data) continue
+        for (const item of data) {
+          if (item.name === ".emptyFolderPlaceholder") continue
+          const path = `${cat}/${item.name}`
+          const { data: pub } = supabase!.storage.from(WORKS_BUCKET).getPublicUrl(path)
+          results.push({
+            type: cat === "video" ? "video" : "photo",
+            src: pub.publicUrl,
+            alt: `Kai 作品 - ${categoryFromStorage[cat]}`,
+            tag: categoryFromStorage[cat],
+          })
+        }
+      }
+      if (!cancelled) setUploadedWorks(results)
+    }
+
+    loadUploaded()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const works = useMemo(() => [...uploadedWorks, ...staticWorks], [uploadedWorks])
 
   const filtered = useMemo(
     () =>
       activeCategory === "All"
         ? works
         : works.filter((w) => w.tag === activeCategory),
-    [activeCategory],
+    [activeCategory, works],
   )
 
   const lightboxItems: LightboxItem[] = useMemo(
