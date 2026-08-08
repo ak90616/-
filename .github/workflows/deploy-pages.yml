@@ -25,6 +25,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - run: npm ci
+        working-directory: portfolio
+      - run: npm run build
+        working-directory: portfolio
+      - run: cp -r portfolio/dist dist/portfolio
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
