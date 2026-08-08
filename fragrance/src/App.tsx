@@ -1,6 +1,7 @@
 import { Nav } from "@/components/Nav"
 import { Hero } from "@/components/Hero"
 import { ParallaxSection } from "@/components/ParallaxSection"
+import { Bloom } from "@/components/Bloom"
 import { Collection } from "@/components/Collection"
 import { Footer } from "@/components/Footer"
 import { useSpotlight } from "@/hooks/useSpotlight"
@@ -43,6 +44,7 @@ export default function App() {
           每一次噴灑，都是一次儀式。
         </p>
       </ParallaxSection>
+      <Bloom />
       <Collection />
       <Footer />
     </div>

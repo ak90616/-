@@ -18,6 +18,9 @@
   --sage: #4d5640;
   --sage-2: #33392b;
   --sage-gold: #cda43a;
+  --sand: #caa06a;
+  --sand-2: #8a6a45;
+  --paige-gold: #d4af6a;
 
   --spot-x: 50%;
   --spot-y: 30%;
@@ -94,5 +97,21 @@ body {
 @layer base {
   * {
     border-color: var(--line);
+  }
+}
+
+/* --- bloom interlude: slow ambient breathing scale --- */
+@keyframes bloom-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+.bloom-canvas {
+  animation: bloom-breathe 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bloom-canvas {
+    animation: none;
   }
 }

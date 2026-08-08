@@ -30,6 +30,32 @@ function DivinyCard() {
   )
 }
 
+function HermesCard() {
+  const { ref, handlers } = useTilt<HTMLElement>()
+  return (
+    <article
+      ref={ref}
+      {...handlers}
+      className="relative isolate flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[20px] p-7 shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-transform duration-300"
+      style={{
+        background:
+          "radial-gradient(circle at 70% 12%, rgba(202,160,106,0.4), transparent 55%), linear-gradient(165deg, var(--sand) 0%, var(--sand-2) 100%)",
+      }}
+    >
+      <svg viewBox="0 0 48 48" fill="none" className="absolute right-7 top-7 h-12 w-12" aria-hidden="true">
+        <path d="M6 34c8-4 14-4 20 0M22 34c8-4 14-4 20 0" stroke="#2a1c10" strokeWidth="1.4" strokeLinecap="round" opacity="0.6" />
+        <circle cx="24" cy="16" r="6" stroke="#2a1c10" strokeWidth="1.4" opacity="0.6" />
+      </svg>
+      <span className="text-[10px] uppercase tracking-[0.2em] text-[#2a1c10]/70">Hermès</span>
+      <h3 className="font-display mt-2 text-2xl text-[#241a10]">Terre d'Hermès</h3>
+      <p className="mt-3 max-w-[22rem] text-sm text-[#3a2a1a]">
+        礦石感的木質基調，佐以葡萄柚與胡椒的清冽，收於岩蘭草與雪松的沉穩——大地色調的經典之作。
+      </p>
+      <span className="mt-4 text-[11px] tracking-wide text-[#3a2a1a]">Eau de Toilette · 100ml</span>
+    </article>
+  )
+}
+
 function OudWoodCard() {
   const { ref, handlers } = useTilt<HTMLElement>()
   return (
@@ -56,31 +82,33 @@ function OudWoodCard() {
   )
 }
 
-function AmberOilCard() {
+function PaigeCard() {
   const { ref, handlers } = useTilt<HTMLElement>()
   return (
     <article
       ref={ref}
       {...handlers}
       className="relative isolate flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[20px] p-7 shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-transform duration-300"
-      style={{
-        background:
-          "radial-gradient(circle at 20% 10%, rgba(205,164,58,0.32), transparent 55%), linear-gradient(160deg, var(--sage) 0%, var(--sage-2) 100%)",
-      }}
+      style={{ background: "#0a0806" }}
     >
-      <svg viewBox="0 0 48 48" fill="none" className="absolute right-7 top-7 h-13 w-13" aria-hidden="true">
-        <path
-          d="M24 6c8 8 12 14 12 20a12 12 0 1 1-24 0c0-6 4-12 12-20Z"
-          stroke="var(--sage-gold)"
-          strokeWidth="1.4"
-        />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120px 160px at 30% 25%, rgba(212,175,106,0.5), transparent 70%), radial-gradient(90px 120px at 75% 45%, rgba(212,175,106,0.3), transparent 70%), radial-gradient(140px 100px at 55% 75%, rgba(212,175,106,0.22), transparent 70%)",
+          filter: "blur(2px)",
+        }}
+      />
+      <svg viewBox="0 0 48 48" fill="none" className="absolute right-7 top-7 h-12 w-12" aria-hidden="true">
+        <rect x="18" y="6" width="12" height="10" rx="2" stroke="var(--paige-gold)" strokeWidth="1.3" />
+        <path d="M16 16h16l-2 26a2 2 0 0 1-2 2H20a2 2 0 0 1-2-2Z" stroke="var(--paige-gold)" strokeWidth="1.3" />
       </svg>
-      <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--paper-muted)]">同系列 · 保養精粹</span>
-      <h3 className="font-display mt-2 text-2xl text-[var(--paper)]">琥珀萃取精油</h3>
-      <p className="mt-3 max-w-[22rem] text-sm text-[var(--paper-muted)]">
-        植物系的溫潤觸感，質地如琥珀般透亮，喚醒肌膚與香氣同步的儀式感。
+      <span className="relative text-[10px] uppercase tracking-[0.2em] text-[var(--paper-muted)]">Paige</span>
+      <h3 className="font-display relative mt-2 text-2xl text-[var(--paper)]">Luminous</h3>
+      <p className="relative mt-3 max-w-[22rem] text-sm text-[var(--paper-muted)]">
+        黑金交織的柔焦光暈，凝膠般的通透感，讓肌膚的光澤如攝影棚燈光般細緻。
       </p>
-      <span className="mt-4 text-[11px] tracking-wide text-[var(--paper-muted)]">Facial Oil · 30ml</span>
+      <span className="relative mt-4 text-[11px] tracking-wide text-[var(--paper-muted)]">Collagen Essence Gel</span>
     </article>
   )
 }
@@ -90,21 +118,24 @@ export function Collection() {
     <section id="collection" className="relative px-6 py-24 lg:px-12 lg:py-28" style={{ background: "var(--ink)" }}>
       <Reveal className="mx-auto mb-12 max-w-6xl">
         <p className="text-xs uppercase tracking-[0.4em] text-[var(--accent)]">系列選粹</p>
-        <h2 className="font-display mt-4 text-3xl text-[var(--paper)] sm:text-4xl">三種暗色調的感官語言</h2>
+        <h2 className="font-display mt-4 text-3xl text-[var(--paper)] sm:text-4xl">四種暗色調的感官語言</h2>
         <p className="mt-4 max-w-lg text-sm text-[var(--paper-muted)] sm:text-base">
-          從東方琥珀到沉木辛香，再到一抹植物系的溫潤——這是本季選粹的三個切面。
+          從東方琥珀到礦石木質，從沉香辛調到柔焦光暈——這是本季選粹的四個切面。
         </p>
       </Reveal>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Reveal>
           <DivinyCard />
         </Reveal>
-        <Reveal delay={80}>
+        <Reveal delay={60}>
+          <HermesCard />
+        </Reveal>
+        <Reveal delay={120}>
           <OudWoodCard />
         </Reveal>
-        <Reveal delay={160}>
-          <AmberOilCard />
+        <Reveal delay={180}>
+          <PaigeCard />
         </Reveal>
       </div>
     </section>
